@@ -1,0 +1,13 @@
+{
+  "methods": {
+    ".UDP": "Sends UDP packets of varying sizes to overwhelm the target",
+    ".TCP": "Continuously sends TCP packets to exhaust the target's connections",
+    ".SYN": "Sends SYN requests to exhaust pending TCP connections",
+    ".MIX": "Alternates between TCP and UDP to bypass defenses",
+    ".VSE": "Send Valve Source Engine Protocol",
+    ".FIVEM": "Sends a specialized Payload designed to Fivem",
+    ".OVHUDP": "Floods the target port with UDP datagrams containing random payloads",
+    ".OVHTCP": "Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs",
+    ".DISCORD": "Sends a specialized UDP packet designed to Discord"
+  }
+}

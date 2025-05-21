@@ -1,0 +1,13 @@
+{
+  "server": {
+    "name": "SentinelaNet",
+    "host": "0.0.0.0",
+    "port": 1337
+  },
+  "global_limits": {
+    "max_attacks": 200,
+    "max_time": 1300,
+    "min_time": 10,
+    "threads": 10
+  }
+}

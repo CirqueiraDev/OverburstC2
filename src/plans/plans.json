@@ -1,0 +1,16 @@
+{
+  "plans": {
+    "NoPlan": {
+      "allowed_methods": []
+    },
+    "basic": {
+      "allowed_methods": ["UDP", "TCP"]
+    },
+    "premium": {
+      "allowed_methods": ["UDP", "TCP", "MIX", "SYN", "VSE", "FIVEM"]
+    },
+    "vip": {
+      "allowed_methods": ["UDP", "TCP", "MIX", "SYN", "OVHUDP", "OVHTCP", "VSE", "DISCORD", "FIVEM"]
+    }
+  }
+}

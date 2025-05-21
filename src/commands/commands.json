@@ -1,0 +1,49 @@
+
+{
+  "commands": {
+    "HELP": {
+      "description": "Shows list of commands",
+      "aliases": ["?", "COMMANDS"]
+    },
+    "BOTNET": {
+      "description": "Shows list of botnet attack methods",
+      "aliases": []
+    },
+    "BOTS": {
+      "description": "Shows all conected bots",
+      "aliases": ["ZOMBIES"]
+    },
+    "STOP": {
+      "description": "Stop all your floods in progress",
+      "aliases": []
+    },
+    "CLEAR": {
+      "description": "Clears the screen",
+      "aliases": ["CLS"]
+    },
+    "LOGOUT": {
+      "description": "Disconnects from C&C server",
+      "aliases": ["QUIT", "EXIT", "BYE"]
+    },
+    "OWNER": {
+      "description": "Shows owner information",
+      "aliases": ["CREDITS"]
+    }
+  },
+  "admin_commands": {
+    "!USER": {
+      "description": "Add/List/Remove users",
+      "aliases": ["?", "COMMANDS"]
+    },
+    "!BLACKLIST": {
+      "description": "Shows list of commands",
+      "aliases": ["?", "COMMANDS"]
+    }
+  },
+  "owner": {
+    "Instagram": "cirqueirakkjk",
+    "Telegram": "Cirqueiraza",
+    "Discord": "cirqueira",
+    "GitHub": "CirqueiraDev"
+  }
+}
