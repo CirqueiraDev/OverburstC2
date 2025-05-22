@@ -265,7 +265,7 @@ class SentinelaServer:
                 title += f"Expires: {user_data.get('expires_at')} | "
                 title += f"Users: {len(self.clients)} | "
                 title += f"Bots: {len(self.bots)} | "
-                title += f"Attacks: {len(self.attacks)}/{max_attacks}\a"
+                title += f"Running: {len(self.attacks)}/{max_attacks}\a"
                 
                 self.send(client, title, False)
                 time.sleep(0.6)
