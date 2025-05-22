@@ -40,6 +40,7 @@
   .FIVEM   | \<target> \<port> \<time> | Send FiveM Status Ping Protocol
   .OVHTCP  | \<target> \<port> \<time> | Starts OVH TCP Flood Bypass
   .OVHUDP  | \<target> \<port> \<time> | Starts OVH UDP Flood Bypass
+  .DISCORD | \<target> \<port> \<time> | Sends a specialized UDP packet designed to Discord
 </div>
 
 ⚠️ **Nota:** Este projeto é apenas para fins educacionais e de pesquisa. O uso indevido pode ser ilegal e resultar em penalidades legais. Sempre utilize conhecimento de segurança para proteger sistemas, não para atacá-los.
