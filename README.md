@@ -16,27 +16,27 @@
 <br/>
 
 ## Admin Commands
-- !user       Add/List/Remove users
-- !blacklist  Add/List/Remove blacklisted targets
+- !user      ```Add/List/Remove users```
+- !blacklist  ```Add/List/Remove blacklisted targets```
 
 ## CNC Commands
-- help    Shows list of commands
-- botnet  Shows list of botnet attack methods
-- bots    Shows all conected bots
-- stop    Stop all your floods in progress
-- clear   Clears the console window screen
-- exit    Disconnects from the C&C server
+- help    ```Shows list of commands```
+- botnet  ```Shows list of botnet attack methods```
+- bots    ```Shows all conected bots```
+- stop    ```Stop all your floods in progress```
+- clear   ```Clears the console window screen```
+- exit    ```Disconnects from the C&C server```
 
 ## Methodos disponiveis no payload
-- .UDP      Sends UDP packets of varying sizes to overwhelm the target
-- .TCP      Continuously sends TCP packets to exhaust the target's connections
-- .SYN      Sends SYN requests to exhaust pending TCP connections
-- .MIX      Alternates between TCP and UDP to bypass defenses
-- .VSE      Send Valve Source Engine Protocol
-- .FIVEM    Sends a specialized Payload designed to Fivem
-- .OVHTCP   Floods the target port with UDP datagrams containing random payloads
-- .OVHUDP   Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs
-- .DISCORD  Sends a specialized UDP packet designed to Discord
+- .UDP      ```Sends UDP packets of varying sizes to overwhelm the target```
+- .TCP      ```Continuously sends TCP packets to exhaust the target's connections```
+- .SYN      ```Sends SYN requests to exhaust pending TCP connections```
+- .MIX      ```Alternates between TCP and UDP to bypass defenses```
+- .VSE      ```Send Valve Source Engine Protocol```
+- .FIVEM    ```Sends a specialized Payload designed to Fivem```
+- .OVHTCP   ```Floods the target port with UDP datagrams containing random payloads```
+- .OVHUDP   ```Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs```
+- .DISCORD  ```Sends a specialized UDP packet designed to Discord```
 
 <br/>
 
