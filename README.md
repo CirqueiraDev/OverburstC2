@@ -11,24 +11,17 @@
 
 ---
 
-<div align="center">
+## Admin Commands
+!user       Add/List/Remove users
+!blacklist  Add/List/Remove blacklisted targets
 
-  ### Admin/root Commands
-  Command | Description
-  --------|------------
-  !user   | Add/List/Remove users
-  !blacklist | Add/List/Remove blacklisted targets
-    
-  ### CNC Commands
-  Command | Description
-  --------|------------
-  help, ? | Shows list of commands
-  botnet | Shows list of botnet attack methods
-  bots | Shows all conected bots
-  stop  | Stop all your floods in progress
-  clear, cls | Clears the console window screen
-  exit, logout | Disconnects from the C&C server
-</div>
+## CNC Commands
+- help    Shows list of commands
+- botnet  Shows list of botnet attack methods
+- bots    Shows all conected bots
+- stop    Stop all your floods in progress
+- clear   Clears the console window screen
+- exit    Disconnects from the C&C server
 
 ## Methodos disponiveis no payload
 - .UDP      Sends UDP packets of varying sizes to overwhelm the target
