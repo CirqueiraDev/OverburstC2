@@ -46,7 +46,24 @@
 
 ⚠️ **Nota:** Este projeto é apenas para fins educacionais e de pesquisa. O uso indevido pode ser ilegal e resultar em penalidades legais. Sempre utilize conhecimento de segurança para proteger sistemas, não para atacá-los.
 
-### Owner
+<br/>
+
+## 🤝 Contribuindo
+
+Contribuições para melhorar ferramentas de pesquisa de segurança são bem-vindas, especialmente aquelas que:
+- Melhoram verificações de segurança
+- Adicionam documentação
+- Aprimoram a qualidade do código
+- Adicionam capacidades de divulgação responsável
+
+## 📜 Criador
+
+Essas ferramentas foram criadas por @CirqueiraDev
+
+
+Aproveita e me segue no insta :D
+
 - **Discord: Cirqueira**
+- <a href="https://www.instagram.com/cirqueirax/">Meu instagram</a>
   
 <a href="https://www.instagram.com/cirqueirax/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"></a>
