@@ -12,8 +12,8 @@
 ---
 
 ## Admin Commands
-!user       Add/List/Remove users
-!blacklist  Add/List/Remove blacklisted targets
+- !user       Add/List/Remove users
+- !blacklist  Add/List/Remove blacklisted targets
 
 ## CNC Commands
 - help    Shows list of commands
