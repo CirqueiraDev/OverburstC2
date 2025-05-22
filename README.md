@@ -38,6 +38,10 @@
 - .OVHUDP   ```Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs```
 - .DISCORD  ```Sends a specialized UDP packet designed to Discord```
 
+  <p align="center">
+      <img src="https://github.com/user-attachments/assets/8ec3e976-3fbe-43f7-831f-cd8859a74d4a">
+  </p>
+
 <br/>
 
 ⚠️ **Nota:** Este projeto é apenas para fins educacionais e de pesquisa. O uso indevido pode ser ilegal e resultar em penalidades legais. Sempre utilize conhecimento de segurança para proteger sistemas, não para atacá-los.
