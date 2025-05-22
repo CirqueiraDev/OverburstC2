@@ -32,14 +32,14 @@
   ### Attack Commands
   Command  | Usage | Description
   ---------|-------|-------------
-  .UDP     | \<target> \<port> \<time> | Starts UDP Flood 
-  .TCP     | \<target> \<port> \<time> | Starts TCP Flood 
-  .MIX     | \<target> \<port> \<time> | Starts TCP and UDP Flood Bypass
-  .SYN     | \<target> \<port> \<time> | Starts TCP SYN Flood
+  .UDP     | \<target> \<port> \<time> | Sends UDP packets of varying sizes to overwhelm the target
+  .TCP     | \<target> \<port> \<time> | Continuously sends TCP packets to exhaust the target's connections
+  .SYN     | \<target> \<port> \<time> | Sends SYN requests to exhaust pending TCP connections
+  .MIX     | \<target> \<port> \<time> | Alternates between TCP and UDP to bypass defenses
   .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
-  .FIVEM   | \<target> \<port> \<time> | Send FiveM Status Ping Protocol
-  .OVHTCP  | \<target> \<port> \<time> | Starts OVH TCP Flood Bypass
-  .OVHUDP  | \<target> \<port> \<time> | Starts OVH UDP Flood Bypass
+  .FIVEM   | \<target> \<port> \<time> | Sends a specialized Payload designed to Fivem
+  .OVHTCP  | \<target> \<port> \<time> | Floods the target port with UDP datagrams containing random payloads
+  .OVHUDP  | \<target> \<port> \<time> | Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs
   .DISCORD | \<target> \<port> \<time> | Sends a specialized UDP packet designed to Discord
 </div>
 
