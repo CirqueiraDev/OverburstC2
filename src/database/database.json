@@ -17,15 +17,6 @@
             "attacks_made": 0,
             "joined_at": "19/05/2025",
             "expires_at": "23/05/2025"
-        },
-        {
-            "username": "renan",
-            "password": "123456",
-            "role": "user",
-            "plan": "NoPlan",
-            "attacks_made": 0,
-            "joined_at": "21/05/2025",
-            "expires_at": "20/05/2025"
         }
     ]
 }
