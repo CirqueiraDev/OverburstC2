@@ -65,5 +65,3 @@ Aproveita e me segue no insta :D
 
 - **Discord: Cirqueira**
 - <a href="https://www.instagram.com/cirqueirax/">Meu instagram</a>
-  
-<a href="https://www.instagram.com/cirqueirax/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"></a>
