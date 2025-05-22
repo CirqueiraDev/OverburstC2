@@ -9,8 +9,6 @@
 
 </div>
 
-> Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
-
 ---
 
 <div align="center">
@@ -44,6 +42,8 @@
   .OVHUDP  | \<target> \<port> \<time> | Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs
   .DISCORD | \<target> \<port> \<time> | Sends a specialized UDP packet designed to Discord
 </div>
+
+> Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
 
 ⚠️ **Nota:** Este projeto é apenas para fins educacionais e de pesquisa. O uso indevido pode ser ilegal e resultar em penalidades legais. Sempre utilize conhecimento de segurança para proteger sistemas, não para atacá-los.
 
