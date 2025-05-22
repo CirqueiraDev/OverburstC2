@@ -12,7 +12,7 @@
 #include <signal.h>
 
 // Configuration
-#define C2_ADDRESS "20.206.241.60"
+#define C2_ADDRESS "your ip vps"
 #define C2_PORT 1337
 #define MAX_USERS 50
 #define MAX_ATTACKS_PER_USER 10
