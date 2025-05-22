@@ -45,8 +45,6 @@
 
 ⚠️ **Nota:** Este projeto é apenas para fins educacionais e de pesquisa. O uso indevido pode ser ilegal e resultar em penalidades legais. Sempre utilize conhecimento de segurança para proteger sistemas, não para atacá-los.
 
-<br>
-
 ### Owner
 - **Discord: Cirqueira**
   
