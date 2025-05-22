@@ -47,25 +47,6 @@
 
 <br>
 
----
-
-### Novidades ✨
-- Atualizado CNC
-    - Adicionado blacklist ```01/03/2025```
-    - Atulizado comando bots ```02/05/2025```
-        - Agora o comando `bots` exibe a quantidade de bots atualmente conectados ao C2, e organizados por arquitetura do sistema (por exemplo: `x86_64`, `arm`, `mips`) (**também mostra a quantidade em cada arquitetura**).
-    - Comando STOP adicionado ```09/05/2025```
-
-- Atualizado Payload
-    - Atualizado Browser Flood ```01/03/2025```
-    - Atualizado UDP Flood Bypass ```06/03/2025```
-    - Atualizado UDP Flood removed ```06/03/2025```
-    - Adicionado TCP and UDP Flood Bypass ```07/03/2025```
-    - Atualizado SYN Flood ```07/03/2025```
-    - Adicionado OVHUDP and OVHTCP Flood Bypass ```04/05/2025```
-    - OVH BUILDER Fixed ```09/05/2025```
----
-
 ### Owner
 - **Discord: Cirqueira**
   
