@@ -57,11 +57,5 @@ Contribuições para melhorar ferramentas de pesquisa de segurança são bem-vin
 - Adicionam capacidades de divulgação responsável
 
 ## 📜 Criador
-
-Essas ferramentas foram criadas por @CirqueiraDev
-
-
-Aproveita e me segue no insta :D
-
 - **Discord: Cirqueira**
 - <a href="https://www.instagram.com/cirqueirax/">Meu instagram</a>
