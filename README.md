@@ -18,13 +18,13 @@ Uma coleção de ferramentas para avaliação de segurança em rede, projetadas 
   - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
     
 - **Scanner de Roteadores ZHONE**
-  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
+  - Testa roteadores ZHONE para injeção de comando na funcionalidade de ping
     
 - **Scanner de Roteadores Fibra**
-  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
+  - Testa roteadores de fibra que usam servidor web BOA para injeção de comando
     
 - **Força Bruta Telnet**
-  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP 
+  - Testa uma lista extensa de credenciais comuns de dispositivos IoT e de rede
 
 <br/>
 
