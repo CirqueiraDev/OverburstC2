@@ -13,18 +13,21 @@
 
 ## Como carregar bots 💣
 
-Uma coleção de ferramentas para avaliação de segurança em rede, projetadas para identificar vulnerabilidades em diversos dispositivos. Apenas para fins educacionais e testes de segurança autorizados.
-- **Scanner de DVR**
+Você pode usar uma coleção de ferramentas para avaliação de segurança em rede, projetadas para identificar vulnerabilidades em diversos dispositivos. Apenas para fins educacionais e testes de segurança autorizados.
+
+### **Scanner de DVR**
   - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
     
-- **Scanner de Roteadores ZHONE**
+### **Scanner de Roteadores ZHONE**
   - Testa roteadores ZHONE para injeção de comando na funcionalidade de ping
     
-- **Scanner de Roteadores Fibra**
+### **Scanner de Roteadores Fibra**
   - Testa roteadores de fibra que usam servidor web BOA para injeção de comando
     
-- **Força Bruta Telnet**
+### **Força Bruta Telnet**
   - Testa uma lista extensa de credenciais comuns de dispositivos IoT e de rede
+
+> https://github.com/CirqueiraDev/botnet-exploits
 
 <br/>
 
