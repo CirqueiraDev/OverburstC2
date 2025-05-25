@@ -22,7 +22,7 @@ Uma coleção de ferramentas para avaliação de segurança em rede, projetadas 
     
 - **Scanner de Roteadores Fibra**
   - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
-  - 
+    
 - **Força Bruta Telnet**
   - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP 
 
