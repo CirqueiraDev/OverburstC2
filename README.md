@@ -11,7 +11,20 @@
 
 <br/>
 
-> Tente usar <a href="https://github.com/CirqueiraDev/botnet-exploits">Scanners e Loaders</a> para carregar mais bots.
+## Como carregar bots 💣
+
+Uma coleção de ferramentas para avaliação de segurança em rede, projetadas para identificar vulnerabilidades em diversos dispositivos. Apenas para fins educacionais e testes de segurança autorizados.
+- **Scanner de DVR**
+  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
+    
+- **Scanner de Roteadores ZHONE**
+  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
+    
+- **Scanner de Roteadores Fibra**
+  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP
+  - 
+- **Força Bruta Telnet**
+  - Testa dispositivos DVR para vulnerabilidades de injeção XML na configuração NTP 
 
 <br/>
 
