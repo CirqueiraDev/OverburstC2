@@ -27,7 +27,8 @@ Você pode usar uma coleção de ferramentas para avaliação de segurança em r
 ### **Força Bruta Telnet**
   - Testa uma lista extensa de credenciais comuns de dispositivos IoT e de rede
 
-> https://github.com/CirqueiraDev/botnet-exploits
+### Explots/Scanners/Loaders
+- https://github.com/CirqueiraDev/botnet-exploits
 
 <br/>
 
