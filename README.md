@@ -1,6 +1,6 @@
 <div align="center">
     <h1>OverburstC2 based on SentinelaNet</h1>
-    <h3>SentinelaNet porem melhorado!</h3>
+    <h3>SentinelaNet melhorado!</h3>
 
   <p align="center">
       <img src="https://github.com/user-attachments/assets/cadc2e29-6d15-4e1a-b70b-639ae325d7d8">
