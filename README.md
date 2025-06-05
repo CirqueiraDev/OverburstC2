@@ -54,8 +54,8 @@ Você pode usar uma coleção de ferramentas para avaliação de segurança em r
 - .MIX      ```Alternates between TCP and UDP to bypass defenses```
 - .VSE      ```Send Valve Source Engine Protocol```
 - .FIVEM    ```Sends a specialized Payload designed to Fivem```
-- .OVHTCP   ```Floods the target port with UDP datagrams containing random payloads```
-- .OVHUDP   ```Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs```
+- .OVHUDP   ```Floods the target port with UDP datagrams containing random payloads```
+- .OVHTCP   ```Randomizes bytes (0x00 to 0xFF) and line terminators to bypass WAFs```
 - .DISCORD  ```Sends a specialized UDP packet designed to Discord```
 
   <p align="center">
