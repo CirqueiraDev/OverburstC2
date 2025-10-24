@@ -16,7 +16,7 @@
 
 <br/>
 
-## 🔧 Loading Bots
+## Loading Bots
 
 You can use a collection of network security evaluation tools designed to identify vulnerabilities in various devices.  
 **Intended for educational purposes and authorized security testing only.**
@@ -33,19 +33,19 @@ You can use a collection of network security evaluation tools designed to identi
 ### **Telnet Brute Force**
 - Attempts common credential combinations on IoT and network devices via Telnet.
 
-### 🧪 Exploits / Scanners / Loaders
+### Exploits / Scanners / Loaders
 - https://github.com/CirqueiraDev/botnet-exploits
 
 <br/>
 
-## 🔐 Admin Commands
+## Admin Commands
 
 | Command | Description |
 |--------|-------------|
 | `!user` | Add / List / Remove users |
 | `!blacklist` | Add / List / Remove blacklisted targets |
 
-## 🧠 CNC Commands
+## CNC Commands
 
 | Command | Description |
 |--------|-------------|
@@ -56,7 +56,7 @@ You can use a collection of network security evaluation tools designed to identi
 | `clear`    | Clears the console screen |
 | `exit`     | Disconnects from the C&C server |
 
-## 🚀 Payload Methods Available
+## Payload Methods Available
 
 | Method | Description |
 |--------|-------------|
@@ -81,16 +81,6 @@ You can use a collection of network security evaluation tools designed to identi
 This project is strictly intended for **educational and research purposes only**.  
 Misuse of this software may be **illegal** and lead to **criminal penalties**.  
 Always use cybersecurity knowledge to **defend systems**, never to attack them.
-
----
-
-## 🤝 Contributing
-
-Contributions to improve security research tools are welcome, especially those that:
-- Improve vulnerability detection
-- Add documentation
-- Improve code quality
-- Enable responsible disclosure support
 
 ---
 
