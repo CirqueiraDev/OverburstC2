@@ -86,5 +86,5 @@ Always use cybersecurity knowledge to **defend systems**, never to attack them.
 
 ## 👤 Author
 
-- **Discord:** Cirqueira  
-- [Instagram Profile](https://www.instagram.com/cirqueirax/)
+- **Discord:** Cirqueira 
+- [Instagram Profile](https://www.instagram.com/sirkeirax/)
