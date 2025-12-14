@@ -38,6 +38,35 @@ You can use a collection of network security evaluation tools designed to identi
 
 <br/>
 
+<br/>
+
+<div align="center">
+ <h1>How to setup C2</h1>
+</div>
+
+### Requirements:
+```
+colorama==0.4.6
+```
+### Commands:
+```
+git clone https://github.com/CirqueiraDev/OverburstC2.git
+```
+
+```
+cd OverburstC2
+```
+
+```
+pip install -r requirements.txt
+```
+
+```
+python main.py
+```
+
+<br/>
+
 ## Admin Commands
 
 | Command | Description |
@@ -85,7 +114,9 @@ You can use a collection of network security evaluation tools designed to identi
 - [x] STOP command fixed (I think)
 - [ ] Added news methods (Soon)
 
+<br/>
 
+---
 
 ## ⚠️ Legal Notice
 
