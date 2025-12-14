@@ -1,4 +1,4 @@
-import threading
+import threading, re
 from colorama import Fore
 from src.database.database import load_users, save_users, add_user, remove_user, get_user
 from src.blacklist.blacklist import load_blacklist, add_to_blacklist, remove_from_blacklist, is_blacklisted
@@ -48,27 +48,52 @@ def handle_user_command(args, client, send):
         send(client, "")
         
     elif action == "ADD":
-        if len(args) < 6:
+        if len(args) < 7:
             send(client, f"{Fore.YELLOW}Usage: !USER ADD <username> <password> <plan> <role> <expires in days>\n")
             return
-            
-        username = args[2]
-        password = args[3]
-        plan = args[4]
-        role = args[5]
-        expires = int(args[6])
+        
+        username = args[2].strip()
+        password = args[3].strip()
+        plan = args[4].strip().lower()
+        role = args[5].strip().lower()
+        expires_str = args[6].strip()
+        
+        if not username or len(username) > 32:
+            send(client, f"{R}Invalid username! Must be 1-32 characters.\n")
+            return
+        
+        if not re.match(r'^[a-zA-Z0-9_-]+$', username):
+            send(client, f"{R}Invalid username format! Only alphanumeric, underscore, and dash allowed.\n")
+            return
+        
+        if not password or len(password) < 4 or len(password) > 128:
+            send(client, f"{R}Invalid password! Must be 4-128 characters.\n")
+            return
+        
+        if not expires_str.isdigit():
+            send(client, f"{R}Invalid expiry days! Must be a number.\n")
+            return
+        
+        try:
+            expires = int(expires_str)
+            if expires < 1 or expires > 3650:
+                send(client, f"{R}Invalid expiry days! Must be between 1 and 3650.\n")
+                return
+        except (ValueError, OverflowError):
+            send(client, f"{R}Invalid expiry days! Must be a valid number.\n")
+            return
         
         if get_user(username):
             send(client, f"{R}User {username} already exists!\n")
             return
 
         valid_plans = ["basic", "premium", "vip"]
-        if plan.lower() not in valid_plans:
+        if plan not in valid_plans:
             send(client, f"{R}Invalid plan! Choose from: {', '.join(valid_plans)}\n")
             return
         
         valid_role = ["user", "admin"]
-        if role.lower() not in valid_role:
+        if role not in valid_role:
             send(client, f"{R}Invalid role! Choose from: {', '.join(valid_role)}\n")
             return
 
@@ -83,14 +108,22 @@ def handle_user_command(args, client, send):
             send(client, f"{Fore.YELLOW}Usage: !USER REMOVE <username>\n")
             return
             
-        username = args[2]
+        username = args[2].strip()
+        
+        if not username or len(username) > 32:
+            send(client, f"{R}Invalid username!\n")
+            return
+        
+        if not re.match(r'^[a-zA-Z0-9_-]+$', username):
+            send(client, f"{R}Invalid username format!\n")
+            return
+        
         user = get_user(username)
         
         if not user:
             send(client, f"{R}User {username} not found!\n")
             return
             
-        # Remover usuário
         users = load_users()
         users = [u for u in users if u['username'] != username]
         save_users(users)

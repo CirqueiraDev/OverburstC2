@@ -12,6 +12,7 @@ venv/
 # Builds
 dist/
 build/
+.vs/
 
 # Logs
 *.log

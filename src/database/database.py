@@ -1,5 +1,6 @@
 import json, os, time
 from datetime import datetime, timedelta
+import bcrypt
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'database.json')
 
@@ -12,18 +13,29 @@ def save_users(users):
     with open(DB_PATH, 'w') as f:
         json.dump({"users": users}, f, indent=4)
 
+def hash_password(password):
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+def verify_password(password, hashed):
+    try:
+        return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
+    except:
+        return False
+
 def add_user(username, password, plan, role, expiry_days):
     users = load_users()
     if any(u['username'] == username for u in users):
-        return False  # já existe
+        return False
 
     now = datetime.now()
     joined_at = now.strftime("%d/%m/%Y")
     expires_at = (now + timedelta(days=expiry_days)).strftime("%d/%m/%Y")
     
+    password_hash = hash_password(password)
+    
     users.append({
         "username": username,
-        "password": password,
+        "password": password_hash,
         "role": role,
         "plan": plan,
         "attacks_made": 0,
@@ -71,26 +83,46 @@ def get_user(username):
     return None
 
 def login(username, password):
-
     users = load_users()
     for user in users:
-        if user['username'] == username and user['password'] == password:
-            # Verificar se o usuário expirou e atualizar plano para NoPlan se necessário
-            if 'expires_at' in user:
-                try:
-                    expiry_date = datetime.strptime(user['expires_at'], "%d/%m/%Y")
-                    if expiry_date < datetime.now() and user['plan'] != 'NoPlan':
-                        user['plan'] = 'NoPlan'
-                        # Salvar mudanças
-                        for i, u in enumerate(users):
-                            if u['username'] == username:
-                                users[i] = user
-                                break
-                        save_users(users)
-                except (ValueError, TypeError):
-                    pass 
-            
-            return True
+        if user['username'] == username:
+            stored_password = user.get('password', '')
+            if stored_password.startswith('$2b$') or stored_password.startswith('$2a$') or stored_password.startswith('$2y$'):
+                if verify_password(password, stored_password):
+                    if 'expires_at' in user:
+                        try:
+                            expiry_date = datetime.strptime(user['expires_at'], "%d/%m/%Y")
+                            if expiry_date < datetime.now() and user['plan'] != 'NoPlan':
+                                user['plan'] = 'NoPlan'
+                                for i, u in enumerate(users):
+                                    if u['username'] == username:
+                                        users[i] = user
+                                        break
+                                save_users(users)
+                        except (ValueError, TypeError):
+                            pass
+                    return True
+            else:
+                if user['password'] == password:
+                    user['password'] = hash_password(password)
+                    for i, u in enumerate(users):
+                        if u['username'] == username:
+                            users[i] = user
+                            break
+                    save_users(users)
+                    if 'expires_at' in user:
+                        try:
+                            expiry_date = datetime.strptime(user['expires_at'], "%d/%m/%Y")
+                            if expiry_date < datetime.now() and user['plan'] != 'NoPlan':
+                                user['plan'] = 'NoPlan'
+                                for i, u in enumerate(users):
+                                    if u['username'] == username:
+                                        users[i] = user
+                                        break
+                                save_users(users)
+                        except (ValueError, TypeError):
+                            pass
+                    return True
     return False  
 
 def update_user_attack_count(username):

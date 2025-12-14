@@ -47,6 +47,7 @@ You can use a collection of network security evaluation tools designed to identi
 ### Requirements:
 ```
 colorama==0.4.6
+bcrypt==4.1.2
 ```
 ### Commands:
 ```
