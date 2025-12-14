@@ -4,10 +4,6 @@ from src.database.database import load_users, save_users, add_user, remove_user,
 from src.blacklist.blacklist import load_blacklist, add_to_blacklist, remove_from_blacklist, is_blacklisted
 
 def handle_admin_commands(command, args, client, send, username):
-    """
-    Manipula comandos administrativos
-    """
-    # Verifica se o usuário tem permissão de admin
     user_data = get_user(username)
     if not user_data or user_data.get("role") != "admin":
         send(client, f"{Fore.RED}You don't have permission to use admin commands!\n")
@@ -21,10 +17,6 @@ def handle_admin_commands(command, args, client, send, username):
         send(client, f"{Fore.RED}Unknown admin command: {command}\n")
 
 def handle_user_command(args, client, send):
-    """
-    Gerencia comandos relacionados a usuários (!USER)
-    Uso: !USER LIST | !USER ADD <username> <password> <plan> | !USER REMOVE <username>
-    """
     gray = Fore.LIGHTBLACK_EX
     C = Fore.LIGHTWHITE_EX
     R = Fore.RED
@@ -69,8 +61,7 @@ def handle_user_command(args, client, send):
         if get_user(username):
             send(client, f"{R}User {username} already exists!\n")
             return
-            
-        # Validar plano
+
         valid_plans = ["basic", "premium", "vip"]
         if plan.lower() not in valid_plans:
             send(client, f"{R}Invalid plan! Choose from: {', '.join(valid_plans)}\n")
@@ -80,8 +71,7 @@ def handle_user_command(args, client, send):
         if role.lower() not in valid_role:
             send(client, f"{R}Invalid role! Choose from: {', '.join(valid_role)}\n")
             return
-            
-        # Adicionar usuário
+
         if add_user(username, password, plan, role, expires):
             send(client, f"{G}User {username} with plan {plan} added successfully!\n")
             return
@@ -110,10 +100,6 @@ def handle_user_command(args, client, send):
         send(client, f"{R}Unknown user command: {action}\n")
         
 def handle_blacklist_command(args, client, send):
-    """
-    Gerencia comandos relacionados à blacklist (!BLACKLIST)
-    Uso: !BLACKLIST LIST | !BLACKLIST ADD <ip> | !BLACKLIST REMOVE <ip>
-    """
     gray = Fore.LIGHTBLACK_EX
     C = Fore.LIGHTWHITE_EX
     R = Fore.RED
@@ -145,9 +131,7 @@ def handle_blacklist_command(args, client, send):
             return
             
         ip = args[2]
-        
-        # Usar a função de validação de IP que já existe no código principal
-        # Esta é uma verificação simplificada, ideal é reutilizar validate_ip do main.py
+
         import re
         pattern = re.compile(r'^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$')
         if not pattern.match(ip):
@@ -176,11 +160,10 @@ def handle_blacklist_command(args, client, send):
     else:
         send(client, f"{R}Unknown blacklist command: {action}\n")
 
-"""
+
 # Verificar comandos de administração
-if command.startswith('!'):
-    from src.commands.commands import handle_admin_commands
-    handle_admin_commands(command, args, client, send, username)
-    send(client, prompt, False)
-    continue
-"""
+# if command.startswith('!'):
+#     from src.commands.commands import handle_admin_commands
+#     handle_admin_commands(command, args, client, send, username)
+#     send(client, prompt, False)
+#     continue

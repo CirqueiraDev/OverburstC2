@@ -13,8 +13,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().setup()
         self.request.settimeout(60)
 
-print(f"[+] Servidor HTTP iniciado em http://0.0.0.0:{PORT}")
-print(f"[+] Servindo arquivos de: {SERVE_DIR}")
+print(f"[+] Started server on http://0.0.0.0:{PORT}")
+print(f"[+] files on: {SERVE_DIR}")
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
     httpd.serve_forever()

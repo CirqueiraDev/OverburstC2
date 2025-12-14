@@ -76,6 +76,17 @@ You can use a collection of network security evaluation tools designed to identi
 
 <br/>
 
+## News / Bugs / Features
+
+- [x] Fixed: some attacks were not being launched
+- [x] Fixed: SyntaxError: f-string: unmatched '(' on main.py
+- [x] Some methods have been optimized
+- [x] The bot code has been reorganized
+- [x] STOP command fixed (I think)
+- [ ] Added news methods (Soon)
+
+
+
 ## ⚠️ Legal Notice
 
 This project is strictly intended for **educational and research purposes only**.  
@@ -86,5 +97,6 @@ Always use cybersecurity knowledge to **defend systems**, never to attack them.
 
 ## 👤 Author
 
+- **CirqueiraDev**
 - **Discord:** Cirqueira 
 - [Instagram Profile](https://www.instagram.com/sirkeirax/)

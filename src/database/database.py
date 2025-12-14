@@ -13,19 +13,14 @@ def save_users(users):
         json.dump({"users": users}, f, indent=4)
 
 def add_user(username, password, plan, role, expiry_days):
-    """
-    Adiciona um novo usuário ao sistema
-    """
     users = load_users()
     if any(u['username'] == username for u in users):
         return False  # já existe
-        
-    # Calcular datas - formato simplificado (dia/mês/ano)
+
     now = datetime.now()
     joined_at = now.strftime("%d/%m/%Y")
     expires_at = (now + timedelta(days=expiry_days)).strftime("%d/%m/%Y")
     
-    # Criar novo usuário
     users.append({
         "username": username,
         "password": password,
@@ -39,9 +34,6 @@ def add_user(username, password, plan, role, expiry_days):
     return True
 
 def remove_user(username):
-    """
-    Remove um usuário do sistema
-    """
     users = load_users()
     initial_count = len(users)
     users = [u for u in users if u['username'] != username]
@@ -52,10 +44,6 @@ def remove_user(username):
     return False
 
 def get_user(username):
-    """
-    Consulta e retorna todas as informações de um usuário pelo nome,
-    incluindo os dias restantes do plano (não salvos no arquivo).
-    """
     users = load_users()
     for u in users:
         if u['username'] == username:
@@ -64,7 +52,6 @@ def get_user(username):
                 try:
                     expiry_date = datetime.strptime(u['expires_at'], "%d/%m/%Y")
                     if expiry_date < datetime.now() and u['plan'] != 'NoPlan':
-                        # Usuário expirou, atualizar plano para NoPlan
                         u['plan'] = 'NoPlan'
                         for i, user in enumerate(users):
                             if user['username'] == username:
@@ -72,22 +59,19 @@ def get_user(username):
                                 break
                         save_users(users)
 
-                    # Adicionar dias restantes dinamicamente
                     days_remaining = (expiry_date - datetime.now()).days
                     u['days_remaining'] = max(days_remaining, 0)
 
                 except (ValueError, TypeError):
-                    u['days_remaining'] = None  # Se houver erro no formato da data
+                    u['days_remaining'] = None
             else:
-                u['days_remaining'] = None  # Caso não tenha campo expires_at
+                u['days_remaining'] = None
 
             return u
     return None
 
 def login(username, password):
-    """
-    Verifica se as credenciais do usuário são válidas.
-    """
+
     users = load_users()
     for user in users:
         if user['username'] == username and user['password'] == password:
@@ -96,7 +80,6 @@ def login(username, password):
                 try:
                     expiry_date = datetime.strptime(user['expires_at'], "%d/%m/%Y")
                     if expiry_date < datetime.now() and user['plan'] != 'NoPlan':
-                        # Usuário expirou, atualizar plano para NoPlan
                         user['plan'] = 'NoPlan'
                         # Salvar mudanças
                         for i, u in enumerate(users):
@@ -105,15 +88,12 @@ def login(username, password):
                                 break
                         save_users(users)
                 except (ValueError, TypeError):
-                    pass  # Formato inválido, ignorar verificação de expiração
+                    pass 
             
-            return True  # Credenciais válidas
-    return False  # Credenciais inválidas
+            return True
+    return False  
 
 def update_user_attack_count(username):
-    """
-    Incrementa o contador de ataques realizados por um usuários
-    """
     users = load_users()
     for user in users:
         if user['username'] == username:
@@ -123,24 +103,19 @@ def update_user_attack_count(username):
     return False
 
 def is_method_allowed(username, method):
-    """
-    Verifica se um método está disponível para o plano do usuário
-    """
     user = get_user(username)
     if not user:
         return False
         
     plan = user.get('plan', 'NoPlan')
     
-    # Carregar planos
     plans_path = os.path.join(os.path.dirname(__file__), '..', 'plans', 'plans.json')
     try:
         with open(plans_path, 'r') as f:
             plans_data = json.load(f)
     except:
         return False
-        
-    # Verificar método no plano
+
     plan_data = plans_data.get('plans', {}).get(plan, {})
     allowed_methods = plan_data.get('allowed_methods', [])
     

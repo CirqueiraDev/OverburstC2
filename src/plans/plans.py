@@ -4,7 +4,6 @@ from datetime import datetime
 PLANS_PATH = os.path.join(os.path.dirname(__file__), 'plans.json')
 
 def load_plans():
-    """Carrega informações sobre os planos disponíveis"""
     try:
         with open(PLANS_PATH, 'r') as f:
             data = json.load(f)
@@ -13,15 +12,11 @@ def load_plans():
         return {}
 
 def get_plan_methods(plan_name):
-    """Retorna os métodos disponíveis para um plano específico"""
     plans = load_plans()
     plan = plans.get(plan_name.lower(), plans.get("NoPlan", {}))
     return plan.get("allowed_methods", [])
 
 def validate_plan_for_method(plan_name, method):
-    """
-    Verifica se um método está disponível para o plano
-    """
     if method.startswith('.'):
         method = method[1:]
     
@@ -29,9 +24,6 @@ def validate_plan_for_method(plan_name, method):
     return method in allowed_methods
 
 def upgrade_plan(current_plan):
-    """
-    Retorna o próximo nível de plano baseado no plano atual
-    """
     plan_hierarchy = ["NoPlan", "basic", "premium", "vip"]
     try:
         current_index = plan_hierarchy.index(current_plan.lower())
@@ -40,12 +32,9 @@ def upgrade_plan(current_plan):
     except ValueError:
         pass
     
-    return current_plan  # Retorna o mesmo plano se já for o maior ou desconhecido
+    return current_plan 
 
 def get_plan_limitations():
-    """
-    Retorna um resumo das limitações de cada plano para exibição
-    """
     plans = load_plans()
     plan_limits = {}
     
@@ -59,9 +48,6 @@ def get_plan_limitations():
     return plan_limits
 
 def format_plan_info(plan_name):
-    """
-    Formata informações sobre um plano para exibição
-    """
     plans = load_plans()
     plan = plans.get(plan_name.lower(), None)
     
