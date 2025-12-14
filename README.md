@@ -99,10 +99,6 @@ python main.py
 | `.OVHTCP`  | Randomized byte sequences and terminators to bypass WAFs |
 | `.DISCORD` | Specialized UDP packet targeting Discord services |
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/8ec3e976-3fbe-43f7-831f-cd8859a74d4a" alt="Demo Screenshot">
-</p>
-
 <br/>
 
 ## News / Bugs / Features
