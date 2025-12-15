@@ -387,7 +387,6 @@ int main() {
             sleep(1);
             char *arch = get_architecture();
             send(sock, arch, strlen(arch), 0);
-            send(sock, "\n", 1, 0);
             printf("[INFO] Sent username: %s\n", arch);
             
             memset(buffer, 0, BUFFER_SIZE);
@@ -398,7 +397,6 @@ int main() {
                 generate_bot_auth(arch, auth_token);
                 if (strlen(auth_token) > 0) {
                     send(sock, auth_token, strlen(auth_token), 0);
-                    send(sock, "\n", 1, 0);
                     printf("[INFO] Authenticated successfully with HMAC\n");
                 } else {
                     printf("[ERROR] Failed to generate authentication token\n");

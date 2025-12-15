@@ -1,5 +1,5 @@
 import logging
-import time
+from colorama import Fore
 
 class BotManager:
     def __init__(self, bots_dict, bots_by_arch, locks):
@@ -69,9 +69,7 @@ class BotManager:
         with self.locks['bots']:
             return len(self.bots)
     
-    def list_architectures(self, client, send_func):
-        from colorama import Fore
-        
+    def list_architectures(self, client, send_func):    
         with self.locks['bots']:
             bots_count = len(self.bots)
             if bots_count == 0:

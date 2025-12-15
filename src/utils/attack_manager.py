@@ -2,7 +2,7 @@ import logging
 import time
 import threading
 from src.utils.validators import validate_ip, validate_port, validate_time
-from src.utils.security import sanitize_log, sanitize_command
+from src.utils.security import sanitize_log
 from src.blacklist.blacklist import is_blacklisted
 from colorama import Fore
 

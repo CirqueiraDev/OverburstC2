@@ -2,21 +2,12 @@
     "users": [
         {
             "username": "sirkeira",
-            "password": "2580",
+            "password": "$2b$12$ierY6hvXGcy14CUUpuLUEe96PKSVNJWAVwKF1Dk8xJlBgVxPSQgxG",
             "role": "admin",
             "plan": "vip",
-            "attacks_made": 23,
+            "attacks_made": 1,
             "joined_at": "19/05/2025",
             "expires_at": "29/05/2028"
-        },
-        {
-            "username": "cirqueira",
-            "password": "258025",
-            "role": "user",
-            "plan": "basic",
-            "attacks_made": 0,
-            "joined_at": "19/05/2025",
-            "expires_at": "23/05/2025"
         }
     ]
 }

@@ -25,7 +25,7 @@ def setup_ssl_socket(sock, server_config):
         logging.warning(f"SSL setup failed: {e}")
     return sock
 
-def create_server_socket(host, port):
+def create_server_socket():
     sock = socket.socket()
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

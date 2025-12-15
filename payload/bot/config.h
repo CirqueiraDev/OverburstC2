@@ -11,7 +11,7 @@
 #define BUFFER_SIZE 2048
 #define MAX_THREADS 1000
 
-#define BOT_SECRET_B64 "CHANGE_THIS_IN_CONFIG_JSON"
+#define BOT_SECRET_B64 "kZPUbHYdNYRDXBjbR4SeWvUfvD5Sc90wMrC8XGa2Z54="
 
 typedef struct {
     pthread_t thread_id;

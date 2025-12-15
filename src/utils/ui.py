@@ -1,5 +1,3 @@
-from colorama import Fore
-
 ANSI_CLEAR = '\033[2J\033[H'
 
 COLORS = {
