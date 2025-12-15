@@ -242,7 +242,6 @@ class SentinelaServer:
         for _ in range(3):
             self.send(client, f'{Fore.LIGHTBLUE_EX}Password{Fore.LIGHTWHITE_EX}:{Fore.BLACK} ', False, False)
             data = safe_recv(client, self.max_data_len)
-            print('senha recebida:', data)
             if not data:
                 return None
             password = data.decode('utf-8', errors='ignore').strip()
