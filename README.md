@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>OverburstC2 — Based on SentinelaNet</h1>
+  <h1>OverburstC2 based on SentinelaNet</h1>
   
   <p align="center">
     <img src="https://img.shields.io/badge/status-dev-blue?style=for-the-badge&logo=python" alt="Dev Status">
@@ -10,7 +10,7 @@
     <img src="https://github.com/user-attachments/assets/cadc2e29-6d15-4e1a-b70b-639ae325d7d8" alt="Banner">
   </p>
   <p>
-    This botnet is an enhanced version of SentinelaNet and is publicly available for free.
+    This botnet is an enhanced version of SentinelaNet
   </p>
 </div>
 
