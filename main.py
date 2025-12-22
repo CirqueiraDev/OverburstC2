@@ -227,7 +227,14 @@ class SentinelaServer:
         for _ in range(3):
             self.send(client, ANSI_CLEAR, False)
             self.send(client, f'{Fore.LIGHTBLUE_EX}Username{Fore.LIGHTWHITE_EX}: ', False)
-            data = safe_recv(client, self.max_data_len)
+            data = b""
+            while len(data) < self.max_username_len:
+                chunk = client.recv(1024)
+                if not chunk:
+                    break
+                data += chunk
+                if b'\n' in chunk or b'\r' in chunk:
+                    break
             if not data:
                 return None
             username = data.decode('utf-8', errors='ignore').strip()
@@ -236,17 +243,26 @@ class SentinelaServer:
             if username:
                 self.send(client, Fore.RED + 'Invalid username format\n')
         return None
-    
+
     def _get_password(self, client):
         for _ in range(3):
             self.send(client, f'{Fore.LIGHTBLUE_EX}Password{Fore.LIGHTWHITE_EX}:{Fore.BLACK} ', False, False)
-            data = safe_recv(client, self.max_data_len)
+            data = b""
+            while len(data) < self.max_password_len:
+                chunk = client.recv(1024)
+                if not chunk:
+                    break
+                data += chunk
+                if b'\n' in chunk or b'\r' in chunk:
+                    break
             if not data:
                 return None
             password = data.decode('utf-8', errors='ignore').strip()
             if password and len(password) <= self.max_password_len:
                 return password
         return None
+
+
     
     def _ping_bots_loop(self):
         while True:

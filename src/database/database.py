@@ -82,48 +82,46 @@ def get_user(username):
             return u
     return None
 
+from datetime import datetime
+
 def login(username, password):
+    username = username.strip().lower()  # normalize input
     users = load_users()
-    for user in users:
-        if user['username'] == username:
-            stored_password = user.get('password', '')
-            if stored_password.startswith('$2b$') or stored_password.startswith('$2a$') or stored_password.startswith('$2y$'):
-                if verify_password(password, stored_password):
-                    if 'expires_at' in user:
-                        try:
-                            expiry_date = datetime.strptime(user['expires_at'], "%d/%m/%Y")
-                            if expiry_date < datetime.now() and user['plan'] != 'NoPlan':
-                                user['plan'] = 'NoPlan'
-                                for i, u in enumerate(users):
-                                    if u['username'] == username:
-                                        users[i] = user
-                                        break
-                                save_users(users)
-                        except (ValueError, TypeError):
-                            pass
-                    return True
-            else:
-                if user['password'] == password:
-                    user['password'] = hash_password(password)
-                    for i, u in enumerate(users):
-                        if u['username'] == username:
-                            users[i] = user
-                            break
+
+    for i, user in enumerate(users):
+        stored_username = user.get('username', '').strip().lower()
+        if stored_username != username:
+            continue
+
+        stored_password = user.get('password', '')
+
+        is_hashed = stored_password.startswith(('$2b$', '$2a$', '$2y$'))
+
+        if is_hashed and verify_password(password, stored_password):
+            authenticated = True
+        elif not is_hashed and user.get('password') == password:
+            user['password'] = hash_password(password)
+            users[i] = user
+            save_users(users)
+            authenticated = True
+        else:
+            continue
+
+        expires_at = user.get('expires_at')
+        if expires_at:
+            try:
+                expiry_date = datetime.strptime(expires_at, "%d/%m/%Y")
+                if expiry_date < datetime.now() and user.get('plan') != 'NoPlan':
+                    user['plan'] = 'NoPlan'
+                    users[i] = user
                     save_users(users)
-                    if 'expires_at' in user:
-                        try:
-                            expiry_date = datetime.strptime(user['expires_at'], "%d/%m/%Y")
-                            if expiry_date < datetime.now() and user['plan'] != 'NoPlan':
-                                user['plan'] = 'NoPlan'
-                                for i, u in enumerate(users):
-                                    if u['username'] == username:
-                                        users[i] = user
-                                        break
-                                save_users(users)
-                        except (ValueError, TypeError):
-                            pass
-                    return True
-    return False  
+            except (ValueError, TypeError):
+                pass
+
+        return True
+
+    return False
+
 
 def update_user_attack_count(username):
     users = load_users()
