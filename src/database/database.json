@@ -8,6 +8,15 @@
             "attacks_made": 1,
             "joined_at": "19/05/2025",
             "expires_at": "29/05/2028"
+        },
+        {
+            "username": "cirqueira",
+            "password": "$2b$12$UuOoIKecim0RkI2tfI8/bOlMOmdpd8K2QvOWj41ifHSI4JWYsyKcS",
+            "role": "user",
+            "plan": "premium",
+            "attacks_made": 0,
+            "joined_at": "22/12/2025",
+            "expires_at": "20/02/2026"
         }
     ]
 }

