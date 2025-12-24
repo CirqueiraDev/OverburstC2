@@ -36,14 +36,12 @@ char *get_architecture() {
     return arch;
 }
 
-// NOVA FUNÇÃO: Gera autenticação usando HMAC-SHA256
 void generate_bot_auth(const char *arch, char *auth_output) {
     if (strcmp(BOT_SECRET_B64, "CHANGE_THIS_IN_CONFIG_JSON") == 0) {
         strcpy(auth_output, "");
         return;
     }
     
-    // Decode base64 secret
     uint8_t decoded_secret[64];
     int secret_len = base64_decode(BOT_SECRET_B64, decoded_secret, sizeof(decoded_secret));
     
@@ -53,13 +51,12 @@ void generate_bot_auth(const char *arch, char *auth_output) {
         return;
     }
     
-    // Calculate HMAC-SHA256
+
     uint8_t hmac_result[32];
     hmac_sha256(decoded_secret, secret_len, 
                 (const uint8_t *)arch, strlen(arch), 
                 hmac_result);
     
-    // Convert to hex string
     for (int i = 0; i < 32; i++) {
         sprintf(auth_output + (i * 2), "%02x", hmac_result[i]);
     }
