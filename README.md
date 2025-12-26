@@ -4,7 +4,6 @@
   <p align="center">
     <img src="https://img.shields.io/badge/status-dev-blue?style=for-the-badge&logo=python" alt="Dev Status">
     <img src="https://img.shields.io/badge/version-1.0-blueviolet?style=for-the-badge&logo=github">
-    <img src="https://komarev.com/ghpvc/?username=CirqueiraDev&style=for-the-badge&color=blueviolet&label=Views">
   </p>
   <p align="center">
     <img src="https://github.com/user-attachments/assets/cadc2e29-6d15-4e1a-b70b-639ae325d7d8" alt="Banner">
