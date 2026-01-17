@@ -362,12 +362,9 @@ int main() {
                     char passbuf[128];
                     snprintf(passbuf, sizeof(passbuf), "%s\n", auth_token);
                     send(sock, passbuf, strlen(passbuf), 0);
-<<<<<<< HEAD
                     printf("[INFO] Authenticated successfully\n");
-=======
                     printf("[INFO] Authenticated successfully with HMAC\n");
->>>>>>> 6ecf8bf5f23dd4230a4c81c67b9ace178b511f13
-                } else {
+                } else {  
                     printf("[ERROR] Failed to generate authentication token\n");
                     close(sock);
                     sleep(20);
