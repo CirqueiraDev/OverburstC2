@@ -34,21 +34,39 @@ echo ""
 
 for dir in "$COMPILERS_DIR"/*; do
     if [[ -d "$dir" ]]; then
-        BIN_PATH=$(find "$dir" -type f -executable -name "*-gcc" | head -n 1)
+        BIN_PATH=""
+        
+        BIN_PATH=$(find "$dir" \( -type f -o -type l \) -executable -name "*-gcc" 2>/dev/null | head -n 1)
+        
+        if [[ -z "$BIN_PATH" ]]; then
+            BIN_PATH=$(find "$dir" \( -type f -o -type l \) -executable -name "gcc" 2>/dev/null | head -n 1)
+        fi
+        
+        if [[ -z "$BIN_PATH" ]]; then
+            BIN_PATH=$(find "$dir" \( -type f -o -type l \) -executable -name "*-g++" 2>/dev/null | head -n 1)
+        fi
+        
+        if [[ -z "$BIN_PATH" ]]; then
+            BIN_PATH=$(find "$dir" \( -type f -o -type l \) -executable -name "g++" 2>/dev/null | head -n 1)
+        fi
+
+        if [[ -z "$BIN_PATH" ]]; then
+            BIN_PATH=$(find "$dir" \( -type f -o -type l \) -executable -name "*-cc" 2>/dev/null | grep -E "(gcc|g\+\+|cc)$" | head -n 1)
+        fi
 
         if [[ -n "$BIN_PATH" ]]; then
             ARCH=$(basename "$dir" | sed 's/cross-compiler-//')
             OUTFILE="$OUTPUT_DIR/bot.$ARCH"
 
-            echo "[+] Compiling for $ARCH..."
+            echo "[+] Compiling for $ARCH using $BIN_PATH..."
 
             if [[ "$USES_PTHREAD" == "yes" ]]; then
-                "$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE" -lpthread
+                "$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE" -lpthread 2>&1
             else
-                "$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE"
+                "$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE" 2>&1
             fi
 
-            if [[ $? -eq 0 ]]; then
+            if [[ $? -eq 0 && -f "$OUTFILE" ]]; then
                 SIZE=$(du -h "$OUTFILE" | cut -f1)
                 echo "[✓] Success: $OUTFILE ($SIZE)"
                 ((SUCCESS_COUNT++))
@@ -56,33 +74,42 @@ for dir in "$COMPILERS_DIR"/*; do
                 echo "[✗] Failed to compile for $ARCH"
                 ((FAILED_COUNT++))
                 
-                ERROR_LOG=$("$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE" -lpthread 2>&1)
+                if [[ "$USES_PTHREAD" == "yes" ]]; then
+                    ERROR_LOG=$("$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE" -lpthread 2>&1)
+                else
+                    ERROR_LOG=$("$BIN_PATH" -std=c99 -static -w $C_FILES -o "$OUTFILE" 2>&1)
+                fi
                 
                 if echo "$ERROR_LOG" | grep -q "relocation truncated to fit"; then
                     echo "    (Known toolchain limitation, not a code issue)"
                 elif echo "$ERROR_LOG" | grep -q "\.h.*No such file or directory"; then
                     MISSING_HEADER=$(echo "$ERROR_LOG" | grep -o "[^/]*\.h" | head -n1)
                     echo ""
-                    echo "════════════════════════════════════════════════════════════"
+                    echo "╔════════════════════════════════════════════════════════════╗"
                     echo "  [!] ERROR: Missing header file: $MISSING_HEADER"
                     echo ""
                     echo "  Make sure all required .h files are in $SRC_DIR/"
-                    echo "════════════════════════════════════════════════════════════"
+                    echo "╚════════════════════════════════════════════════════════════╝"
                     echo ""
+                else
+                    echo "    First few error lines:"
+                    echo "$ERROR_LOG" | head -n 5 | sed 's/^/    /'
                 fi
             fi
         else
             echo "[!] GCC not found in: $dir"
+            echo "    Available executables:"
+            find "$dir" -type f -executable 2>/dev/null | head -n 10 | sed 's/^/      /'
         fi
     fi
 done
 
 echo ""
-echo "════════════════════════════════════════════════════════════"
+echo "╔════════════════════════════════════════════════════════════╗"
 echo "[✓] Compilation finished!"
 echo ""
 echo "Results: $SUCCESS_COUNT successful, $FAILED_COUNT failed"
 echo ""
 echo "Binaries location: $OUTPUT_DIR/"
 ls -lh "$OUTPUT_DIR" 2>/dev/null | tail -n +2 | awk '{print "  • " $9 " (" $5 ")"}'
-echo "════════════════════════════════════════════════════════════"
+echo "╚════════════════════════════════════════════════════════════╝"
